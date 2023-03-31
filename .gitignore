@@ -1,0 +1,15 @@
+# node_modules
+/node_modules
+/client/node_modules
+
+# build
+/build
+/client/build
+/dist
+/client/dist
+
+# env
+/config.env
+
+# reference.txt
+/reference.txt
