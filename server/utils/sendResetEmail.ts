@@ -18,13 +18,13 @@ export default async function sendResetEmail(email: string, resetToken: string) 
         LINK - ${process.env.BROWSER_URL}/reset-password/${resetToken}
 
         THANKS.
-        KHETI BAZAAR
+        CULTIVATE-EXCHANGE
         `;
 
         const mailOptions = {
             from: process.env.MAIL,
             to: email,
-            subject: "KHETI BAZAAR RESET PASSWORD",
+            subject: "CULTIVATE-EXCHANGE RESET PASSWORD",
             text,
         };
 

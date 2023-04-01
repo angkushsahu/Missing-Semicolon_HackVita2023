@@ -1,2 +1,2 @@
-export const tokenName = "khetiBazaarToken";
-export const site = "khetibazaar";
+export const tokenName = "cultivateExchangeToken";
+export const site = "cultivate-exchange";
