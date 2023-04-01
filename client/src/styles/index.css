@@ -38,8 +38,9 @@ body {
         @apply block cursor-pointer text-gray-600;
     }
     .input-container > input,
+    .input-container > textarea,
     .input-container > select {
-        @apply w-full cursor-pointer focus-visible:outline-none;
+        @apply w-full cursor-pointer focus-visible:outline-none resize-none;
     }
     .input-container > select > option {
         @apply text-black;

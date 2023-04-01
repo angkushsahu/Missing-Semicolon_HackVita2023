@@ -1,14 +1,14 @@
-// import { IUser } from "./types";
+import { IUser } from "./types";
 
-// export interface Locals {
-//     user: IUser;
-// }
+export interface Locals {
+    user: IUser;
+}
 
-// export as namespace Express;
-// export = Express;
+export as namespace Express;
+export = Express;
 
-// declare namespace Express {
-//     export interface Response {
-//         typedLocals: Locals;
-//     }
-// }
+declare namespace Express {
+    export interface Response {
+        typedLocals: Locals;
+    }
+}

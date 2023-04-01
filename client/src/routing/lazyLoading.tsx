@@ -5,6 +5,9 @@ export const Home = lazy(() => import("../pages/home"));
 export const Products = lazy(() => import("../pages/products"));
 export const ProductsSearch = lazy(() => import("../pages/products/search"));
 export const ProductDescription = lazy(() => import("../pages/products/description"));
+export const ProductCreate = lazy(() => import("../pages/products/create"));
+export const ProductUpdate = lazy(() => import("../pages/products/update"));
+export const MyProducts = lazy(() => import("../pages/products/myProducts"));
 // transport
 export const Transport = lazy(() => import("../pages/transport"));
 export const TransportSearch = lazy(() => import("../pages/transport/search"));

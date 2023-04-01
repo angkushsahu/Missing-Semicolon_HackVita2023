@@ -9,6 +9,9 @@ const routing = createBrowserRouter(
             <Route element={<Header />}>
                 <Route path={routes.home} element={<Component.Home />} />
                 <Route path={routes.productsSearch} element={<Component.ProductsSearch />} />
+                <Route path={routes.createProduct} element={<Component.ProductCreate />} />
+                <Route path={routes.updateProduct} element={<Component.ProductUpdate />} />
+                <Route path={routes.myProducts} element={<Component.MyProducts />} />
                 <Route path={routes.products} element={<Component.Products />} />
                 <Route path={routes.transportSearch} element={<Component.TransportSearch />} />
                 <Route path={routes.transport} element={<Component.Transport />} />
