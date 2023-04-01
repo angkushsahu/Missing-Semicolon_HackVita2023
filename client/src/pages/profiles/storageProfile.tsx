@@ -1,17 +1,48 @@
 import { Link } from "react-router-dom";
 import { routes } from "../../routing";
+import { toast } from "react-toastify";
+import { useDeleteAccountMutation, useLogoutMutation } from "../../store";
+import { Loading } from "../../components";
 
 export default function StorageProfile() {
+    const [logout, { isLoading }] = useLogoutMutation();
+    const [deleteAccount, { isLoading: loading }] = useDeleteAccountMutation();
+
     async function onLogout() {
         const confirmation = window.confirm("Are you sure you want to logout ?");
         if (!confirmation) return;
+
+        try {
+            const response = await logout().unwrap();
+            if (response.success) {
+                toast.success("Logout successful");
+                return;
+            }
+            toast.error(response.message);
+        } catch (err: any) {
+            toast.error(err.data.message as string);
+        }
     }
 
     async function onDeleteAccount() {
         const confirmation = window.confirm("Are you sure you want to delete your account ?");
         if (!confirmation) return;
+
+        try {
+            const response = await deleteAccount().unwrap();
+            if (response.success) {
+                toast.success("Logout successful");
+                return;
+            }
+            toast.error(response.message);
+        } catch (err: any) {
+            toast.error(err.data.message as string);
+        }
     }
 
+    if (loading || isLoading) {
+        return <Loading />;
+    }
     return (
         <section className="max-w-6xl mx-auto px-3 pt-10 pb-10">
             <div className="text-center">
