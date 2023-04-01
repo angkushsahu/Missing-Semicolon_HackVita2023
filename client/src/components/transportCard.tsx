@@ -1,23 +1,24 @@
-export interface TransportCardProps {}
+import { IUser } from "../types";
 
-const transportCard = () => {
+export interface TransportCardProps {
+    data: IUser;
+}
+
+const transportCard = ({ data }: TransportCardProps) => {
     return (
         <section className="bg-white shadow-lg rounded-lg max-w-sm w-full p-3">
             <section className="flex-col">
                 <div className="border-none">
-                    <h1 className="font-bold text-lg mt-2">Train service</h1>
+                    <h1 className="font-bold text-lg mt-2">{data.name}</h1>
                 </div>
                 <div className=" border-none flex font-semibold mb-2">
-                    <p>email@gmail.com</p>
+                    <p>{data.email}</p>
                 </div>
                 <div>
-                    <p>54578375845</p>
+                    <p>{data.phone}</p>
                 </div>
                 <div>
-                    <h1>India</h1>
-                </div>
-                <div>
-                    <h1>Assam</h1>
+                    <h1>{data.state}</h1>
                 </div>
                 <div>
                     <button type="submit" title="contact merchant" className="w-full mt-6">

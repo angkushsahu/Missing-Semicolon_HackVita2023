@@ -42,7 +42,7 @@ export default function Storage() {
                 <p>You searched for {location}</p>
                 <section className="mt-8 flex items-center justify-center flex-wrap gap-4">
                     {data.users.map((data, idx) => (
-                        <StorageCard key={idx}></StorageCard>
+                        <StorageCard key={idx} data={data}></StorageCard>
                     ))}
                 </section>
                 <Pagination currentPage={currentPage} onPageChange={onPageChange} resultPerPage={resultPerPage} totalResults={totalResults} />
