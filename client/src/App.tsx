@@ -7,7 +7,7 @@ import Loading from "./components/loading";
 
 export default function App() {
     return (
-        <main className="min-h-screen bg-bg-col">
+        <main className="min-h-screen bg-bg-col overflow-x-hidden">
             <Suspense fallback={<Loading />}>
                 <RouterProvider router={routing} />
             </Suspense>
