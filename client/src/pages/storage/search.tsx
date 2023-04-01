@@ -1,9 +1,9 @@
 import { FormEvent, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search } from "../components";
-import { routes } from "../routing";
+import { Search } from "../../components";
+import { routes } from "../../routing";
 
-export default function TransportSearch() {
+export default function StorageSearch() {
     const searchRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ export default function TransportSearch() {
         e.preventDefault();
         const search = searchRef.current?.value;
         if (!search) return;
-        navigate(`${routes.transport}?location=${search}&page=1`);
+        navigate(`${routes.storage}?location=${search}&page=1`);
     }
 
     return <Search onSearch={onSearch} searchRef={searchRef} placeholder="Enter location" />;

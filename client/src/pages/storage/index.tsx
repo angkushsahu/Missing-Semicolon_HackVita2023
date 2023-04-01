@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Pagination, StorageCard } from "../components";
-import { routes } from "../routing";
+import { Pagination, StorageCard } from "../../components";
+import { routes } from "../../routing";
 
 export default function Storage() {
     const { search } = useLocation();
@@ -36,7 +36,7 @@ export default function Storage() {
             <p>You searched for {location}</p>
             <section className="mt-8 flex items-center justify-center flex-wrap gap-4">
                 {tempData.map((data, idx) => (
-                    <StorageCard key={idx} ></StorageCard>
+                    <StorageCard key={idx}></StorageCard>
                 ))}
             </section>
             <Pagination currentPage={currentPage} onPageChange={onPageChange} resultPerPage={resultPerPage} totalResults={totalResults} />

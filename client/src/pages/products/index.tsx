@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Pagination, ProductCard } from "../components";
-import { routes } from "../routing";
+import { Pagination, ProductCard } from "../../components";
+import { routes } from "../../routing";
 
 export default function Products() {
     const { search } = useLocation();

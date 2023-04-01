@@ -3,13 +3,14 @@ import { lazy } from "react";
 export const Home = lazy(() => import("../pages/home"));
 // products
 export const Products = lazy(() => import("../pages/products"));
-export const ProductsSearch = lazy(() => import("../pages/productsSearch"));
+export const ProductsSearch = lazy(() => import("../pages/products/search"));
+export const ProductDescription = lazy(() => import("../pages/products/description"));
 // transport
 export const Transport = lazy(() => import("../pages/transport"));
-export const TransportSearch = lazy(() => import("../pages/transportSearch"));
+export const TransportSearch = lazy(() => import("../pages/transport/search"));
 // storage
 export const Storage = lazy(() => import("../pages/storage"));
-export const StorageSearch = lazy(() => import("../pages/storageSearch"));
+export const StorageSearch = lazy(() => import("../pages/storage/search"));
 // profile
 export const UserProfile = lazy(() => import("../pages/profiles/userProfile"));
 export const TransportProfile = lazy(() => import("../pages/profiles/transportProfile"));
@@ -29,4 +30,3 @@ export const ChangePassword = lazy(() => import("../pages/changePassword"));
 export const UpdateUserAsStorage = lazy(() => import("../pages/updateUser/updateUserAsStorage"));
 export const UpdateUserAsTransport = lazy(() => import("../pages/updateUser/updateUserAsTransport"));
 export const UpdateUserAsUser = lazy(() => import("../pages/updateUser/updateUserAsUser"));
-export const ProductDescription = lazy(() => import("../pages/productDescription"));

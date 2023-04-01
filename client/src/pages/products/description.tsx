@@ -1,4 +1,4 @@
-import Papaya from "../assets/papaya.jpg";
+import Papaya from "../../assets/papaya.jpg";
 
 const ProductDescription = () => {
     return (
