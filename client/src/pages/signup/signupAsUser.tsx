@@ -5,6 +5,7 @@ import { routes } from "../../routing";
 import { useUserSignupMutation } from "../../store";
 import { toast } from "react-toastify";
 import { validateEmail } from "../../utils";
+import { Loading } from "../../components";
 
 export default function SignupAsUser() {
     const navigate = useNavigate();
@@ -53,6 +54,9 @@ export default function SignupAsUser() {
     const togglePassword = () => setShowPassword((prev) => !prev);
     const toggleConfirmPassword = () => setShowConfirmPassword((prev) => !prev);
 
+    if (isLoading) {
+        return <Loading />;
+    }
     return (
         <section className="min-h-screen flex items-center justify-center p-3">
             <div className="bg-white shadow-lg rounded-lg max-w-[32rem] w-full p-3">
