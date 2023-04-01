@@ -1,23 +1,13 @@
 import { IoMdBus } from "react-icons/io";
 import { BsBuildings } from "react-icons/bs";
 import { TfiShoppingCart } from "react-icons/tfi";
-import background from "../assets/bg.jpg";
-import farmer from "../assets/farmer.jpg";
 import { Link } from "react-router-dom";
 import { routes } from "../routing";
 import { motion } from "framer-motion";
+import farmer from "../assets/farmer.jpg";
+import SwiperComponent from "../components/swiper";
 
 export default function Home() {
-    const headerOptions = {
-        initial: {
-            x: "-100%",
-            opacity: 0,
-        },
-        whileInView: {
-            x: "0",
-            opacity: 1,
-        },
-    };
     const textOptions = {
         initial: {
             x: "-100%",
@@ -42,20 +32,20 @@ export default function Home() {
     return (
         <section>
             <section className="relative isolate h-[40rem] after:absolute after:inset-0 after:bg-banner">
-                <img src={background} alt="background" className="-z-10 absolute inset-0 object-cover h-full w-full opacity-70" loading="lazy" />
-                <section className="flex items-center justify-end max-w-6xl mx-auto h-full">
+                <SwiperComponent />
+                {/* <section className="flex items-center justify-end max-w-6xl mx-auto h-full">
                     <div className="flex items-end flex-col px-3">
-                        <motion.h1 {...headerOptions} className="text-black text-right text-4xl sm:text-6xl font-bold mb-6">
+                        <motion.h1 {...textOptions} className="text-black text-right text-4xl sm:text-6xl font-bold mb-6">
                             Kheti Bazaar
                         </motion.h1>
-                        <motion.h2 {...headerOptions} className="text-black text-right text-xl sm:text-2xl font-semibold">
+                        <motion.h2 {...textOptions} className="text-black text-right text-xl sm:text-2xl font-semibold">
                             Bringing the farm to your fingertips
                         </motion.h2>
-                        <motion.h2 {...headerOptions} className="text-black text-right text-xl sm:text-2xl font-semibold">
+                        <motion.h2 {...textOptions} className="text-black text-right text-xl sm:text-2xl font-semibold">
                             Shop fresh, shop local with us at KhetiBazaar
                         </motion.h2>
                     </div>
-                </section>
+                </section> */}
             </section>
             <section className="bg-green-50 flex text-center flex-col sm:flex-row">
                 <Link
