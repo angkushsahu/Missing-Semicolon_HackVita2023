@@ -5,3 +5,4 @@ export { default as ProductCard } from "./productCard";
 export { default as TransportCard } from "./transportCard";
 export { default as StorageCard } from "./storageCard";
 export { default as Search } from "./search";
+export { default as ProtectedRoute } from "./protectedRoute";

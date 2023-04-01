@@ -3,6 +3,7 @@ export interface IUser {
     email: string;
     _id: string;
     phone: string;
+    type: string;
     zone: string;
     state: string;
     locality: string;
@@ -14,7 +15,7 @@ export interface IRequest {
 }
 
 export interface ILogin {
-    name: string;
+    password: string;
     email: string;
 }
 
@@ -47,3 +48,20 @@ export interface IStorageUpdate extends Omit<IStorageSignup, "password"> {}
 export interface ITransportUpdate extends Omit<ITransportSignup, "password"> {}
 
 export type IUpdateAccount = IUserUpdate | IStorageUpdate | ITransportUpdate;
+
+export interface IProduct {
+    name: string;
+    type: string;
+    unit: string;
+    cost: number;
+    weight: number;
+    location: string;
+    description: string;
+    image: string;
+}
+
+export interface IUpdateProduct extends Omit<IProduct, "image"> {}
+
+export interface IProductResponse extends Omit<IProduct, "image"> {
+    image: { picture: string; publicUrl: string };
+}

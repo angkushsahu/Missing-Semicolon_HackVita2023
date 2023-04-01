@@ -3,17 +3,38 @@ import { Link, Outlet } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GrClose } from "react-icons/gr";
 import { routes } from "../routing";
+import { useAppSelector } from "../store";
 
 export default function Header() {
     const [toggleNav, setToggleNav] = useState(false);
+    const { auth, user } = useAppSelector((state) => state.authSlice);
+
+    const authLinks = [
+        {
+            title: "Profile",
+            link:
+                user?.type === "user"
+                    ? routes.userProfile
+                    : user?.type === "transport"
+                    ? routes.transportProfile
+                    : user?.type === "storage"
+                    ? routes.storageProfile
+                    : "",
+        },
+        { title: "Products", link: routes.products },
+        { title: "Transport", link: routes.transport },
+        { title: "Storage", link: routes.storage },
+    ];
 
     const navigationLinks = [
         { title: "Signup", link: routes.signupCriteria },
         { title: "Login", link: routes.login },
-        // { title: "Search", link: routes.productsSearch },
-        // { title: "Profile", link: routes.profile },
-        // start selling will be a link button
     ];
+
+    function getNavigationLinks() {
+        return auth && user ? authLinks : navigationLinks;
+    }
+
     return (
         <>
             <header className="px-3 py-4 shadow-xl">
@@ -22,7 +43,7 @@ export default function Header() {
                         <span className="font-bold text-xl">KhetiBazaar</span>
                     </Link>
                     <nav className="hidden sm:flex justify-center items-center gap-8">
-                        {navigationLinks.map((nav, idx) => (
+                        {getNavigationLinks().map((nav, idx) => (
                             <Link key={idx} to={nav.link} title={`Go to ${nav.title}`}>
                                 {nav.title}
                             </Link>

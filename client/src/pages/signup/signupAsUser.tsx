@@ -1,13 +1,53 @@
-import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { FormEvent, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { BiShow, BiHide } from "react-icons/bi";
 import { routes } from "../../routing";
+import { useUserSignupMutation } from "../../store";
+import { toast } from "react-toastify";
+import { validateEmail } from "../../utils";
 
 export default function SignupAsUser() {
+    const navigate = useNavigate();
+    const nameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const confirmPasswordRef = useRef<HTMLInputElement>(null);
+    const [signup, { isLoading }] = useUserSignupMutation();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     async function onRegister(e: FormEvent) {
         e.preventDefault();
+        const name = nameRef.current?.value;
+        const email = emailRef.current?.value;
+        const phone = phoneRef.current?.value;
+        const password = passwordRef.current?.value;
+        const confirmPassword = confirmPasswordRef.current?.value;
+
+        if (!name || !email || !phone || !password || !confirmPassword) {
+            toast.warn("Please validate all the fields");
+            return;
+        }
+        if (!validateEmail(email)) {
+            toast.warn("Please enter a valid email ID");
+            return;
+        }
+        if (password !== confirmPassword) {
+            toast.warn("Password field are not matching");
+            return;
+        }
+
+        try {
+            const response = await signup({ email, name, password, phone }).unwrap();
+            if (response.success) {
+                toast.success(response.message);
+                navigate(routes.userProfile);
+            } else {
+                toast.error(response.message);
+            }
+        } catch (err: any) {
+            toast.error(err.data.message as string);
+        }
     }
 
     const togglePassword = () => setShowPassword((prev) => !prev);

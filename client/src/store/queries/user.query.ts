@@ -13,6 +13,26 @@ export const userApi = apiQueries.injectEndpoints({
                 };
             },
         }),
+        getAllStorage: builder.query<IRequest & { users: IUser[]; totalProducts: number; resultPerPage: number }, { query: string }>({
+            query: ({ query }: { query: string }) => {
+                return {
+                    url: `/user/storage${query}`,
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                };
+            },
+        }),
+        getAllTransport: builder.query<IRequest & { users: IUser[]; totalProducts: number; resultPerPage: number }, { query: string }>({
+            query: ({ query }: { query: string }) => {
+                return {
+                    url: `/user/transport${query}`,
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                };
+            },
+        }),
         changePassword: builder.mutation<IRequest, { password: string }>({
             query: (body: { password: string }) => {
                 return {
@@ -59,4 +79,12 @@ export const userApi = apiQueries.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useChangePasswordMutation, useDeleteAccountMutation, useGetUserQuery, useLogoutMutation, useUpdateAccountMutation } = userApi;
+export const {
+    useChangePasswordMutation,
+    useDeleteAccountMutation,
+    useGetUserQuery,
+    useLogoutMutation,
+    useUpdateAccountMutation,
+    useGetAllStorageQuery,
+    useGetAllTransportQuery,
+} = userApi;

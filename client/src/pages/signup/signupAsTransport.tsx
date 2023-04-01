@@ -1,10 +1,21 @@
-import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { FormEvent, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { BiShow, BiHide } from "react-icons/bi";
 import { routes } from "../../routing";
-import { stateValues } from "../../utils";
+import { stateValues, validateEmail } from "../../utils";
+import { toast } from "react-toastify";
+import { useTransportSignupMutation } from "../../store";
+import { Loading } from "../../components";
 
 export default function SignupAsTransport() {
+    const nameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
+    const localityRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const confirmPasswordRef = useRef<HTMLInputElement>(null);
+    const [signup, { isLoading }] = useTransportSignupMutation();
+    const navigate = useNavigate();
     type zoneType = "" | "nation" | "state";
     const [zone, setZone] = useState<zoneType>("");
     const [state, setState] = useState("");
@@ -12,10 +23,45 @@ export default function SignupAsTransport() {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     async function onRegister(e: FormEvent) {
         e.preventDefault();
+        const name = nameRef.current?.value;
+        const email = emailRef.current?.value;
+        const phone = phoneRef.current?.value;
+        const locality = localityRef.current?.value;
+        const password = passwordRef.current?.value;
+        const confirmPassword = confirmPasswordRef.current?.value;
+
+        if (!name || !email || !phone || !locality || !password || !confirmPassword) {
+            toast.warn("Please validate all the fields");
+            return;
+        }
+        if (!validateEmail(email)) {
+            toast.warn("Please enter a valid email ID");
+            return;
+        }
+        if (password !== confirmPassword) {
+            toast.warn("Password field are not matching");
+            return;
+        }
+
+        try {
+            const response = await signup({ email, zone, name, password, phone, state }).unwrap();
+            if (response.success) {
+                toast.success(response.message);
+                navigate(routes.transportProfile);
+            } else {
+                toast.error(response.message);
+            }
+        } catch (err: any) {
+            toast.error(err.data.message as string);
+        }
     }
 
     const togglePassword = () => setShowPassword((prev) => !prev);
     const toggleConfirmPassword = () => setShowConfirmPassword((prev) => !prev);
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <section className="min-h-screen flex items-center justify-center p-3">
@@ -24,15 +70,15 @@ export default function SignupAsTransport() {
                 <form onSubmit={onRegister}>
                     <div className="input-container">
                         <label htmlFor="name">Enter company name</label>
-                        <input type="text" name="name" id="name" placeholder="e.g., kheti bazaar" />
+                        <input type="text" name="name" id="name" placeholder="e.g., kheti bazaar" ref={nameRef} />
                     </div>
                     <div className="input-container">
                         <label htmlFor="email">Enter work email</label>
-                        <input type="email" name="email" id="email" placeholder="e.g., khetibazaar@gmail.com" />
+                        <input type="email" name="email" id="email" placeholder="e.g., khetibazaar@gmail.com" ref={emailRef} />
                     </div>
                     <div className="input-container">
                         <label htmlFor="phone">Enter work contact number</label>
-                        <input type="text" name="phone" id="phone" placeholder="e.g., 9087564312" />
+                        <input type="text" name="phone" id="phone" placeholder="e.g., 9087564312" ref={phoneRef} />
                     </div>
                     <div className="input-container">
                         <label htmlFor="operation">Enter operation zone</label>
@@ -71,7 +117,13 @@ export default function SignupAsTransport() {
                     ) : null}
                     <div className="input-container">
                         <label htmlFor="password">Enter password</label>
-                        <input type={showPassword ? "text" : "password"} name="password" id="password" placeholder="Enter a strong password" />
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            id="password"
+                            placeholder="Enter a strong password"
+                            ref={passwordRef}
+                        />
                         {showPassword ? <BiHide size="20" onClick={togglePassword} /> : <BiShow size="20" onClick={togglePassword} />}
                     </div>
                     <div className="input-container">
@@ -81,6 +133,7 @@ export default function SignupAsTransport() {
                             name="confirmPassword"
                             id="confirmPassword"
                             placeholder="Re-enter password"
+                            ref={confirmPasswordRef}
                         />
                         {showConfirmPassword ? (
                             <BiHide size="20" onClick={toggleConfirmPassword} />

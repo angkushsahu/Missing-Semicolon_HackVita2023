@@ -1,15 +1,18 @@
 import { FormEvent, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BiShow, BiHide } from "react-icons/bi";
 import { routes } from "../../routing";
 import { stateValues } from "../../utils";
 import { ZoneType } from "../../types";
-import { useStorageSignupMutation } from "../../store";
+import { useStorageSignupMutation, useUpdateProductMutation } from "../../store";
 import { Loading } from "../../components";
 
 export default function ProductCreate() {
     // name type unit cost weight location description image
+    const { id } = useParams();
+    const [updateProduct, { isLoading }] = useUpdateProductMutation();
+    const navigate = useNavigate();
     const nameRef = useRef<HTMLInputElement>(null);
     const typeRef = useRef<HTMLInputElement>(null);
     const unitRef = useRef<HTMLInputElement>(null);
@@ -17,12 +20,39 @@ export default function ProductCreate() {
     const weightRef = useRef<HTMLInputElement>(null);
     const locationRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
-    const imageRef = useRef<HTMLInputElement>(null);
 
     async function onProductCreation(e: FormEvent) {
         e.preventDefault();
+
+        const name = nameRef.current?.value;
+        const type = typeRef.current?.value;
+        const unit = unitRef.current?.value;
+        const cost = costRef.current?.value;
+        const weight = weightRef.current?.value;
+        const location = locationRef.current?.value;
+        const description = descriptionRef.current?.value;
+
+        if (!name || !type || !unit || !cost || !weight || !location || !description) {
+            toast.warn("Please validate all the fields");
+            return;
+        }
+
+        try {
+            const response = await updateProduct({ cost: +cost, description, location, name, type, unit, weight: +weight, id: id || "" }).unwrap();
+            if (response.success) {
+                toast.success(response.message);
+                navigate(routes.myProducts);
+            } else {
+                toast.error(response.message);
+            }
+        } catch (err: any) {
+            toast.error(err.data.message as string);
+        }
     }
 
+    if (isLoading) {
+        return <Loading />;
+    }
     return (
         <section className="min-h-screen flex items-center justify-center p-3">
             <div className="bg-white shadow-lg rounded-lg max-w-[32rem] w-full p-3">

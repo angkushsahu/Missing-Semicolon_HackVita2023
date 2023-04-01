@@ -5,11 +5,12 @@ import { BiShow, BiHide } from "react-icons/bi";
 import { routes } from "../../routing";
 import { stateValues } from "../../utils";
 import { ZoneType } from "../../types";
-import { useStorageSignupMutation } from "../../store";
+import { useCreateProductMutation, useStorageSignupMutation } from "../../store";
 import { Loading } from "../../components";
 
 export default function ProductCreate() {
-    // name type unit cost weight location description image
+    const [createProduct, { isLoading }] = useCreateProductMutation();
+    const navigate = useNavigate();
     const [avatar, setAvatar] = useState("");
     const nameRef = useRef<HTMLInputElement>(null);
     const typeRef = useRef<HTMLInputElement>(null);
@@ -19,10 +20,34 @@ export default function ProductCreate() {
     const locationRef = useRef<HTMLInputElement>(null);
     const descriptionRef = useRef<HTMLTextAreaElement>(null);
     const avatarRef = useRef<HTMLInputElement | null>(null);
-    const imageRef = useRef<HTMLInputElement>(null);
 
     async function onProductCreation(e: FormEvent) {
         e.preventDefault();
+
+        const name = nameRef.current?.value;
+        const type = typeRef.current?.value;
+        const unit = unitRef.current?.value;
+        const cost = costRef.current?.value;
+        const weight = weightRef.current?.value;
+        const location = locationRef.current?.value;
+        const description = descriptionRef.current?.value;
+
+        if (!name || !type || !unit || !cost || !weight || !location || !description || !avatar) {
+            toast.warn("Please validate all the fields");
+            return;
+        }
+
+        try {
+            const response = await createProduct({ cost: +cost, description, location, name, type, unit, weight: +weight, image: avatar }).unwrap();
+            if (response.success) {
+                toast.success(response.message);
+                navigate(routes.myProducts);
+            } else {
+                toast.error(response.message);
+            }
+        } catch (err: any) {
+            toast.error(err.data.message as string);
+        }
     }
 
     const updateAvatar = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +63,9 @@ export default function ProductCreate() {
         };
     };
 
+    if (isLoading) {
+        return <Loading />;
+    }
     return (
         <section className="min-h-screen flex items-center justify-center p-3">
             <div className="bg-white shadow-lg rounded-lg max-w-[32rem] w-full p-3">
