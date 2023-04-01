@@ -8,8 +8,8 @@ export default function Header() {
     const [toggleNav, setToggleNav] = useState(false);
 
     const navigationLinks = [
-        { title: "Login", link: routes.login },
         { title: "Signup", link: routes.signupCriteria },
+        { title: "Login", link: routes.login },
         // { title: "Search", link: routes.productsSearch },
         // { title: "Profile", link: routes.profile },
         // start selling will be a link button
@@ -21,9 +21,9 @@ export default function Header() {
                     <Link to={routes.home} title="Go to Khetibazaar">
                         <span className="font-bold text-xl">KhetiBazaar</span>
                     </Link>
-                    <nav className="hidden sm:flex justify-center items-center gap-4">
+                    <nav className="hidden sm:flex justify-center items-center gap-8">
                         {navigationLinks.map((nav, idx) => (
-                            <Link key={idx} to={nav.link} title={`Go to ${nav.title}`} className="pr-4">
+                            <Link key={idx} to={nav.link} title={`Go to ${nav.title}`}>
                                 {nav.title}
                             </Link>
                         ))}
