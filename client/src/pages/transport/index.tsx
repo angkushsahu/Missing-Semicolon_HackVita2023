@@ -42,7 +42,7 @@ export default function Transport() {
                 <p>You searched for {location}</p>
                 <section className="mt-8 flex items-center justify-center flex-wrap gap-8">
                     {data.users.map((data, idx) => (
-                        <TransportCard key={idx}></TransportCard>
+                        <TransportCard data={data} key={idx}></TransportCard>
                     ))}
                 </section>
                 <Pagination currentPage={currentPage} onPageChange={onPageChange} resultPerPage={resultPerPage} totalResults={totalResults} />

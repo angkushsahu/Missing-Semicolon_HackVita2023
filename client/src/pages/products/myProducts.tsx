@@ -41,8 +41,8 @@ export default function MyProducts() {
             <section className="max-w-6xl mx-auto px-3 pt-6 pb-10">
                 <p>You searched for {type}</p>
                 <section className="mt-8 flex items-center justify-center flex-wrap gap-4">
-                    {tempData.map((data, idx) => (
-                        <ProductCard key={idx}></ProductCard>
+                    {data.products.map((data, idx) => (
+                        <ProductCard data={data} key={idx}></ProductCard>
                     ))}
                 </section>
                 <Pagination currentPage={currentPage} onPageChange={onPageChange} resultPerPage={resultPerPage} totalResults={totalResults} />
